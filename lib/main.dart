@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_lover/transaction.dart';
-import 'package:intl/intl.dart';
+import 'package:money_lover/widgets/user_transaction.dart';
+import './widgets/new_transaction.dart';
+import './widgets/transaction_list.dart';
 
 void main() => runApp(const MyApp());
 
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter アプリ',
       home: MyHomePage(),
     );
@@ -17,28 +18,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({super.key});
-
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'New Monitor',
-      amount: 99.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'New Mouse',
-      amount: 79.99,
-      date: DateTime.now(),
-    ),
-  ];
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +27,10 @@ class MyHomePage extends StatelessWidget {
         title: const Text('Flutter アプリ'),
       ),
       body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const SizedBox(
+          children: const <Widget>[
+            SizedBox(
               width: double.infinity,
               child: Card(
                 color: Colors.blue,
@@ -58,55 +38,7 @@ class MyHomePage extends StatelessWidget {
                 child: Text('Chart!'),
               ),
             ),
-            Column(
-              children: transactions
-                  .map((transaction) => Card(
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 15,
-                              ),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                color: Colors.orange,
-                                width: 2,
-                              )),
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                '¥${transaction.amount}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.orange,
-                                ),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  transaction.title,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat('y年M月d日').format(transaction.date),
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey,
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ))
-                  .toList(),
-            ),
+            UserTransaction(),
           ]),
     );
   }
