@@ -10,54 +10,60 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: transactions
-          .map((transaction) => Card(
-                child: Row(
+    return SizedBox(
+      height: 500,
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          var transaction = transactions[index];
+
+          return Card(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 15,
+                  ),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                    color: Colors.orange,
+                    width: 2,
+                  )),
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    '¥${transaction.amount.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.orange,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 15,
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        color: Colors.orange,
-                        width: 2,
-                      )),
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        '¥${transaction.amount}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.orange,
-                        ),
+                    Text(
+                      transaction.title,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          transaction.title,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          DateFormat('y年M月d日').format(transaction.date),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                        )
-                      ],
+                    Text(
+                      DateFormat('y年M月d日').format(transaction.date),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
                     )
                   ],
-                ),
-              ))
-          .toList(),
+                )
+              ],
+            ),
+          );
+        },
+        itemCount: transactions.length,
+      ),
     );
   }
 }
