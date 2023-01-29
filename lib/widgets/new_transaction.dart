@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NewTransaction extends StatefulWidget {
   final void Function(String title, double amount) createNewTransaction;
@@ -21,6 +22,8 @@ class _NewTransactionState extends State<NewTransaction> {
       enteredTitle,
       enteredAmount,
     );
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -39,7 +42,12 @@ class _NewTransactionState extends State<NewTransaction> {
             TextField(
               decoration: const InputDecoration(labelText: 'Amount'),
               controller: amountController,
-              keyboardType: TextInputType.number,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+              ],
               // onSubmitted: (_) => submit,
             ),
             ElevatedButton(
